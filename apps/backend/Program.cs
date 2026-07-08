@@ -62,6 +62,20 @@ app.MapPut("/friends/{id}", async (int id, Friend inputFriend, FriendDb db) =>
     return Results.NoContent();
 });
 
+// Patch a friend
+app.MapPatch("/friends/{id}", async (int id, FriendPatchDto inputFriend, FriendDb db) =>
+{
+    var friend = await db.Friends.FindAsync(id);
+
+    if (friend is null) return Results.NotFound();
+
+    if (inputFriend.Name is not null) friend.Name = inputFriend.Name;
+    
+    await db.SaveChangesAsync();
+
+    return Results.NoContent();
+});
+
 // Delete a friend
 app.MapDelete("/friends/{id}", async (int id, FriendDb db) =>
 {

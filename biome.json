@@ -32,7 +32,9 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"nursery": {
+				"useSortedClasses": "error"
+			}
 		}
 	},
 	"javascript": {

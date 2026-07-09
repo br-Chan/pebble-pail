@@ -52,4 +52,5 @@
 	"editor.defaultFormatter": "biomejs.biome",
 	"editor.formatOnSaveMode": "file",
 	"npm.packageManager": "pnpm",
+	"js/ts.tsdk.path": "/apps/Frontend/node_modules/typescript/lib"
 }

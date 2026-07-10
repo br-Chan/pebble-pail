@@ -1,6 +1,7 @@
 {
   "name": "pebble-pail",
   "scripts": {
+    "gen-api": "dotnet build apps/Backend && pnpx openapi-typescript apps/Backend/obj/Backend.json --output apps/Frontend/src/types/api.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {

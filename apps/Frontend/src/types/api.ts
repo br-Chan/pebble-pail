@@ -43,9 +43,9 @@ export interface paths {
             };
             requestBody: {
                 content: {
-                    "application/json": components["schemas"]["Friend"];
-                    "text/json": components["schemas"]["Friend"];
-                    "application/*+json": components["schemas"]["Friend"];
+                    "application/json": components["schemas"]["CreateFriendRequest"];
+                    "text/json": components["schemas"]["CreateFriendRequest"];
+                    "application/*+json": components["schemas"]["CreateFriendRequest"];
                 };
             };
             responses: {
@@ -110,9 +110,9 @@ export interface paths {
             };
             requestBody: {
                 content: {
-                    "application/json": components["schemas"]["Friend"];
-                    "text/json": components["schemas"]["Friend"];
-                    "application/*+json": components["schemas"]["Friend"];
+                    "application/json": components["schemas"]["UpdateFriendRequest"];
+                    "text/json": components["schemas"]["UpdateFriendRequest"];
+                    "application/*+json": components["schemas"]["UpdateFriendRequest"];
                 };
             };
             responses: {
@@ -155,10 +155,16 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        CreateFriendRequest: {
+            name: string;
+        };
         Friend: {
             /** Format: int64 */
             id?: number | string;
-            name?: null | string;
+            name?: string;
+        };
+        UpdateFriendRequest: {
+            name: string;
         };
     };
     responses: never;

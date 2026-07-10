@@ -1,24 +1,15 @@
-import Axios, { type InternalAxiosRequestConfig } from "axios";
+import createClient, { type Middleware } from "openapi-fetch";
+import type { paths } from "#/types/api";
 
-const authRequestInterceptor = (config: InternalAxiosRequestConfig) => {
-	if (config.headers) {
-		config.headers.accept = "application/json";
-	}
-
-	config.withCredentials = true; // TODO: change this.
-	return config;
+const middleware: Middleware = {
+	async onRequest({ request }) {
+		request.headers.set("Accept", "application/json");
+		return request;
+	},
 };
 
-export const api = Axios.create({
-	baseURL: "/api",
+export const api = createClient<paths>({
+	baseUrl: import.meta.env.VITE_API_BASE_URL,
 });
 
-api.interceptors.request.use(authRequestInterceptor);
-api.interceptors.response.use(
-	(response) => {
-		return response.data;
-	},
-	(error) => {
-		return Promise.reject(error);
-	},
-);
+api.use(middleware);

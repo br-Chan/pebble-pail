@@ -1,6 +1,8 @@
 {
   "name": "pebble-pail",
   "scripts": {
+    "backend": "dotnet run --project apps/Backend --launch-profile https",
+    "frontend": "pnpm --filter frontend dev",
     "gen-api": "dotnet build apps/Backend && pnpx openapi-typescript apps/Backend/obj/Backend.json --output apps/Frontend/src/types/api.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

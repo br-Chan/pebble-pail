@@ -44,7 +44,7 @@ namespace Backend.Controllers
         // PUT: api/Friends/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFriend(long id, [FromBody] UpdateFriendRequest request)
+        public async Task<IActionResult> PutFriend(long id, [FromBody] FriendUpdateRequest request)
         {
             var friend = await _context.Friends.FindAsync(id);
             if (friend == null)
@@ -76,7 +76,7 @@ namespace Backend.Controllers
         // POST: api/Friends
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Friend>> PostFriend([FromBody] CreateFriendRequest request)
+        public async Task<ActionResult<Friend>> PostFriend([FromBody] FriendCreateRequest request)
         {
             var friend = new Friend { Name = request.Name };
             _context.Friends.Add(friend);

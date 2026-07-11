@@ -6,7 +6,7 @@ const FriendService = {
 		const response = await api.POST("/api/Friends", {
 			body: data,
 		});
-		return response.data;
+		return response;
 	},
 
 	getFriends: async () => {

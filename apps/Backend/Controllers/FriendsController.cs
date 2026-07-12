@@ -9,13 +9,13 @@ using Backend.Models;
 
 namespace Backend.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class FriendsController : ControllerBase
     {
-        private readonly FriendContext _context;
+        private readonly PebbleContext _context;
 
-        public FriendsController(FriendContext context)
+        public FriendsController(PebbleContext context)
         {
             _context = context;
         }

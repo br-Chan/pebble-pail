@@ -56,7 +56,7 @@ export function DataTable<TData, TValue>({
 					onChange={(event) =>
 						table.getColumn("name")?.setFilterValue(event.target.value)
 					}
-					placeholder="Filter names"
+					placeholder="Search friends..."
 					value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
 				/>
 			</div>

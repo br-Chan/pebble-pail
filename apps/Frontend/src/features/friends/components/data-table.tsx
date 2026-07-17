@@ -7,6 +7,7 @@ import {
 	getCoreRowModel,
 	getFilteredRowModel,
 	getSortedRowModel,
+	noop,
 	type SortingState,
 	useReactTable,
 } from "@tanstack/react-table";
@@ -22,13 +23,17 @@ import {
 } from "@/components/ui/table";
 
 interface DataTableProps<TData, TValue> {
+	className?: string;
 	columns: ColumnDef<TData, TValue>[];
 	data: TData[];
+	onRowClick?: (rowData: TData) => void;
 }
 
 export function DataTable<TData, TValue>({
+	className,
 	columns,
 	data,
+	onRowClick = noop,
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -49,8 +54,8 @@ export function DataTable<TData, TValue>({
 	});
 
 	return (
-		<div>
-			<div className="flex items-center py-4">
+		<div className={className}>
+			<div className="flex items-center pb-4">
 				<Input
 					className="max-w-sm"
 					onChange={(event) =>
@@ -84,8 +89,17 @@ export function DataTable<TData, TValue>({
 						{table.getRowModel().rows?.length ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow
+									className="cursor-pointer"
 									data-state={row.getIsSelected() && "selected"}
 									key={row.id}
+									onClick={() => onRowClick(row.original)}
+									onKeyDown={(e) => {
+										if (e.key === "Enter" || e.key === " ") {
+											onRowClick(row.original);
+										}
+									}}
+									role="link"
+									tabIndex={0}
 								>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>

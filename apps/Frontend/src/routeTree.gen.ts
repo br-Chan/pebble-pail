@@ -9,10 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as FriendsRouteImport } from './routes/friends'
+import { Route as FriendsRouteRouteImport } from './routes/friends/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as FriendsIndexRouteImport } from './routes/friends/index'
+import { Route as FriendsFriendIdRouteImport } from './routes/friends/$friendId'
 
-const FriendsRoute = FriendsRouteImport.update({
+const FriendsRouteRoute = FriendsRouteRouteImport.update({
   id: '/friends',
   path: '/friends',
   getParentRoute: () => rootRouteImport,
@@ -22,31 +24,46 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FriendsIndexRoute = FriendsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => FriendsRouteRoute,
+} as any)
+const FriendsFriendIdRoute = FriendsFriendIdRouteImport.update({
+  id: '/$friendId',
+  path: '/$friendId',
+  getParentRoute: () => FriendsRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/friends': typeof FriendsRoute
+  '/friends': typeof FriendsRouteRouteWithChildren
+  '/friends/$friendId': typeof FriendsFriendIdRoute
+  '/friends/': typeof FriendsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/friends': typeof FriendsRoute
+  '/friends/$friendId': typeof FriendsFriendIdRoute
+  '/friends': typeof FriendsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/friends': typeof FriendsRoute
+  '/friends': typeof FriendsRouteRouteWithChildren
+  '/friends/$friendId': typeof FriendsFriendIdRoute
+  '/friends/': typeof FriendsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/friends'
+  fullPaths: '/' | '/friends' | '/friends/$friendId' | '/friends/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/friends'
-  id: '__root__' | '/' | '/friends'
+  to: '/' | '/friends/$friendId' | '/friends'
+  id: '__root__' | '/' | '/friends' | '/friends/$friendId' | '/friends/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  FriendsRoute: typeof FriendsRoute
+  FriendsRouteRoute: typeof FriendsRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -55,7 +72,7 @@ declare module '@tanstack/react-router' {
       id: '/friends'
       path: '/friends'
       fullPath: '/friends'
-      preLoaderRoute: typeof FriendsRouteImport
+      preLoaderRoute: typeof FriendsRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -65,12 +82,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/friends/': {
+      id: '/friends/'
+      path: '/'
+      fullPath: '/friends/'
+      preLoaderRoute: typeof FriendsIndexRouteImport
+      parentRoute: typeof FriendsRouteRoute
+    }
+    '/friends/$friendId': {
+      id: '/friends/$friendId'
+      path: '/$friendId'
+      fullPath: '/friends/$friendId'
+      preLoaderRoute: typeof FriendsFriendIdRouteImport
+      parentRoute: typeof FriendsRouteRoute
+    }
   }
 }
 
+interface FriendsRouteRouteChildren {
+  FriendsFriendIdRoute: typeof FriendsFriendIdRoute
+  FriendsIndexRoute: typeof FriendsIndexRoute
+}
+
+const FriendsRouteRouteChildren: FriendsRouteRouteChildren = {
+  FriendsFriendIdRoute: FriendsFriendIdRoute,
+  FriendsIndexRoute: FriendsIndexRoute,
+}
+
+const FriendsRouteRouteWithChildren = FriendsRouteRoute._addFileChildren(
+  FriendsRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  FriendsRoute: FriendsRoute,
+  FriendsRouteRoute: FriendsRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -14,8 +14,15 @@ export const friendsQueryOptions = () => {
 	});
 };
 
-export const useFriends = () => {
+export const useGetFriends = () => {
 	return useQuery(friendsQueryOptions());
+};
+
+export const useGetFriend = (friendId: string) => {
+	return useQuery({
+		queryKey: ["friends", friendId],
+		queryFn: () => FriendService.getFriendById(friendId),
+	});
 };
 
 export const useCreateFriend = () => {

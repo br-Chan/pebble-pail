@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Penguin } from "#/features/friends/components/penguin";
+import { useGetFriend } from "#/features/friends/api/queries";
 
 export const Route = createFileRoute("/friends/$friendId")({
 	component: RouteComponent,
@@ -7,9 +7,26 @@ export const Route = createFileRoute("/friends/$friendId")({
 
 function RouteComponent() {
 	const { friendId } = Route.useParams();
+
+	const { isLoading, error, data } = useGetFriend(friendId);
+
+	if (isLoading) {
+		return <div>Loading friend...</div>;
+	}
+	if (error) {
+		return <div>Error loading friend: {error.message}</div>;
+	}
+
+	const friend = data?.data;
+
+	if (!friend) {
+		return <div>Friend not found.</div>;
+	}
+
 	return (
-		<Penguin>
-			<div>Hello "/friends/{friendId}"!</div>
-		</Penguin>
+		<>
+			<h3>{friend.name}</h3>
+			<div>hello</div>
+		</>
 	);
 }

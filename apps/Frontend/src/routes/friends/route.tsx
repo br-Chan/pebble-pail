@@ -3,6 +3,7 @@ import { Separator } from "#/components/ui/separator";
 import { useGetFriends } from "#/features/friends/api/queries";
 import { columns } from "#/features/friends/components/columns";
 import { DataTable } from "#/features/friends/components/data-table";
+import { Penguin } from "#/features/friends/components/penguin";
 
 export const Route = createFileRoute("/friends")({
 	component: RouteComponent,
@@ -11,13 +12,13 @@ export const Route = createFileRoute("/friends")({
 function RouteComponent() {
 	const navigate = useNavigate({ from: Route.id });
 
-	const friendsQuery = useGetFriends();
+	const getFriendsQuery = useGetFriends();
 
-	if (friendsQuery.isLoading) {
+	if (getFriendsQuery.isLoading) {
 		return <div>Loading friends...</div>;
 	}
 
-	const friends = friendsQuery.data?.data || [];
+	const friends = getFriendsQuery.data?.data || [];
 
 	if (!friends) {
 		return <div>No friends found.</div>;
@@ -34,7 +35,9 @@ function RouteComponent() {
 					onRowClick={(friend) => navigate({ to: `/friends/${friend.id}` })}
 				/>
 				<Separator orientation="vertical" />
-				<Outlet />
+				<Penguin>
+					<Outlet />
+				</Penguin>
 			</div>
 		</div>
 	);

@@ -25,17 +25,18 @@ function RouteComponent() {
 	}
 
 	return (
-		<div>
-			<h2 className="border-b p-8">Friends</h2>
-			<div className="flex items-center gap-2">
+		<div className="flex min-h-screen flex-col">
+			<h2 className="p-8">Friends</h2>
+			<Separator />
+			<div className="flex grow items-start gap-2">
 				<DataTable
-					className="flex-2 p-8"
+					className="flex-3 p-8"
 					columns={columns}
 					data={friends}
 					onRowClick={(friend) => navigate({ to: `/friends/${friend.id}` })}
 				/>
 				<Separator orientation="vertical" />
-				<Penguin>
+				<Penguin className="flex-2 p-8">
 					<Outlet />
 				</Penguin>
 			</div>

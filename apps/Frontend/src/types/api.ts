@@ -158,13 +158,16 @@ export interface components {
         Friend: {
             /** Format: int64 */
             id?: number | string;
-            name?: string;
+            firstName?: string;
+            surname?: string;
         };
         FriendCreateRequest: {
-            name: string;
+            firstName: string;
+            surname: string;
         };
         FriendUpdateRequest: {
-            name: string;
+            firstName: string;
+            surname: string;
         };
     };
     responses: never;

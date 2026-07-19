@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useGetFriend } from "#/features/friends/api/queries";
+import { PenguinInformation } from "#/features/friends/components/penguin-information";
 
 export const Route = createFileRoute("/friends/$friendId")({
 	component: RouteComponent,
@@ -23,10 +24,5 @@ function RouteComponent() {
 		return <div>Friend not found.</div>;
 	}
 
-	return (
-		<>
-			<h3>{friend.name}</h3>
-			<div>hello</div>
-		</>
-	);
+	return <PenguinInformation friend={friend} />;
 }

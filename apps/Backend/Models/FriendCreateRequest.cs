@@ -1,3 +1,3 @@
 namespace Backend.Models;
 
-public record FriendCreateRequest(string Name);
+public record FriendCreateRequest(string FirstName, string Surname);

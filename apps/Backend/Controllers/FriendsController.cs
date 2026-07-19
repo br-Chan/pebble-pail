@@ -78,7 +78,7 @@ namespace Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Friend>> PostFriend([FromBody] FriendCreateRequest request)
         {
-            var friend = new Friend { Name = request.Name };
+            var friend = new Friend { FirstName = request.FirstName, Surname = request.Surname };
             _context.Friends.Add(friend);
             await _context.SaveChangesAsync();
 

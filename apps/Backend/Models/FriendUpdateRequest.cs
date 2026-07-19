@@ -1,3 +1,3 @@
 namespace Backend.Models;
 
-public record FriendUpdateRequest(string Name);
+public record FriendUpdateRequest(string FirstName, string Surname);
